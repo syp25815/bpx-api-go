@@ -40,18 +40,18 @@ func (c *Client) DepositAddress(blockChain string) (resp types.WalletAddress) {
 	return
 }
 
-//func (c *Client) Withdrawals(limit, offset int64) {
-//
-//	params := map[string]any{}
-//	params["limit"] = limit
-//	params["offset"] = offset
-//	url := API_BASE + "wapi/v1/capital/withdrawals"
-//	_, resp, _ := c.wrapAgent(newAgent().
-//		Get(url), params).
-//		End()
-//	fmt.Println(resp)
-//	return
-//}
+func (c *Client) Withdrawals(limit, offset int64) (resp []*types.WithDrawl) {
+
+	params := map[string]any{}
+	params["limit"] = limit
+	params["offset"] = offset
+	url := API_BASE + "wapi/v1/capital/withdrawals"
+	c.wrapAgent(newAgent().
+		Get(url), params).
+		EndStruct(&resp)
+	return
+}
+
 //
 //func (c *Client) WithdrawalExecute(address, symbol, blockchain, quantity string) {
 //	params := map[string]any{}
