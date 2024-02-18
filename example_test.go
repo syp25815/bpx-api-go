@@ -9,19 +9,44 @@ import (
 func TestBpx(t *testing.T) {
 
 	c := bpx.NewClient("", "")
+
 	c.Debug = true
 
-	t.Log(xstring.Json(c.DepositAddress("Solana")))
+	//for _, val := range c.Withdrawals(10, 0) {
+	//	t.Log(xstring.Json(val))
+	//}
 
-	for _, val := range c.Capital() {
-		t.Log(xstring.Json(val))
-	}
+	//for _, val := range c.OrdersQuery("SOL_USDC") {
+	//	t.Log(xstring.Json(val))
+	//}
 
-	for _, val := range c.HistoryFills("SOL_USDC", 10, 0) {
-		t.Log(xstring.Json(val))
-	}
+	//t.Log(xstring.Json(c.OrderCancel("SOL_USDC", "111947854823555072", 0)))
+	//c.DebugTS = 1708193094831
+	//t.Log(xstring.Json(c.OrderQuery("SOL_USDC", "111948072781414400", 0)))
+
+	//t.Log(xstring.Json(c.OrdersQuery("")))
+
+	//t.Log(xstring.Json(c.OrderCancel("SOL_USDC", "111947373325647872", 0)))
+
+	//t.Log()
+
+	//c.OrdersCancels("SOL_USDC")
+	//t.Log(xstring.Json(c.DepositAddress("Solana")))
+	//
+	//for _, val := range c.Capital() {
+	//	t.Log(xstring.Json(val))
+	//}
+	//
+	//for _, val := range c.HistoryFills("SOL_USDC", 10, 0) {
+	//	t.Log(xstring.Json(val))
+	//}
 
 	//t.Log(xstring.Json(c.OrderExecute("SOL_USDC", "Bid", "Limit", "IOC", "0.1", "111")))
+
+	c.DebugTS = 1708221111531
+
+	//postOnly
+	t.Log(xstring.Json(c.OrderExecute("SOL_USDC", "Bid", "Limit", "", "1", "12")))
 
 }
 

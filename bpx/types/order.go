@@ -1,8 +1,9 @@
 package types
 
 const (
-	StatusFilled  = "Filled"
-	StatusExpired = "Expired"
+	StatusFilled    = "Filled"
+	StatusExpired   = "Expired"
+	StatusCancelled = "Cancelled"
 )
 
 type Order struct {

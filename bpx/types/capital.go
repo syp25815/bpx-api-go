@@ -24,3 +24,19 @@ type Deposits struct {
 	ToAddress               string  `json:"toAddress"`
 	TransactionHash         string  `json:"transactionHash"`
 }
+
+type WithDrawl struct {
+	Blockchain      string      `json:"blockchain"`
+	ClientId        string      `json:"clientId"`
+	CreatedAt       string      `json:"createdAt"`
+	Fee             string      `json:"fee"`
+	Id              int         `json:"id"`
+	Identifier      string      `json:"identifier"`
+	Quantity        string      `json:"quantity"`
+	Status          string      `json:"status"`
+	SubaccountId    int64       `json:"subaccountId"`
+	Symbol          string      `json:"symbol"`
+	ToAddress       string      `json:"toAddress"`
+	Transaction     interface{} `json:"transaction"`
+	TransactionHash string      `json:"transactionHash"`
+}

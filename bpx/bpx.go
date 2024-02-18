@@ -21,11 +21,12 @@ const (
 )
 
 type Client struct {
-	Key    string
-	Secret string
-	Proxy  string
-	Window string
-	Debug  bool
+	Key     string
+	Secret  string
+	Proxy   string
+	Window  string
+	DebugTS int64
+	Debug   bool
 }
 
 func NewClient(key, secret string) *Client {
@@ -118,6 +119,10 @@ func (c *Client) sign(instruction, ms string, params map[string]any) string {
 
 	if len(paramsStr) > 0 {
 		signStrBuilder.WriteString("&" + paramsStr)
+	}
+
+	if c.Debug && c.DebugTS > 0 {
+		ms = cast.ToString(c.DebugTS)
 	}
 
 	signStrBuilder.WriteString(fmt.Sprintf("&timestamp=%s&window=%s", ms, c.Window))
