@@ -46,7 +46,7 @@ func newAgent() *gorequest.SuperAgent {
 func (c *Client) wrapAgent(request *gorequest.SuperAgent, params map[string]any) *gorequest.SuperAgent {
 	ms := cast.ToString(time.Now().UnixNano() / 1e6)
 	if request.Method == gorequest.GET {
-		request = request.Query(params)
+		request = request.Query(buildQueryParams(params))
 	} else {
 		request = request.SendMap(params)
 	}
@@ -57,9 +57,7 @@ func (c *Client) wrapAgent(request *gorequest.SuperAgent, params map[string]any)
 	method := request.Method
 
 	if c.Debug {
-		fmt.Println("请求链接是：", url)
-
-		//fmt.Println(c.sign(instruction, ms, params))
+		fmt.Println("request url：", url)
 	}
 	if strings.HasSuffix(url, "/api/v1/capital") {
 		if method == gorequest.GET {

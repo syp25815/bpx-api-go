@@ -25,23 +25,20 @@ func (c *Client) OrderExecute(symbol, side, orderType, timeInForce, quantity, pr
 
 }
 
-//func (c *Client) OrderQuery(symbol, orderId string, clientId uint32) (resp *types.Order) {
-//	params := map[string]any{}
-//	params["symbol"] = symbol
-//	params["orderId"] = orderId
-//	if clientId > 0 {
-//		params["clientId"] = clientId
-//	}
-//	url := API_BASE + "api/v1/order"
-//
-//	_, dd, err := c.wrapAgent(newAgent().
-//		Get(url), params).
-//		End()
-//	fmt.Println(err)
-//	fmt.Println(dd)
-//	return
-//
-//}
+func (c *Client) OrderQuery(symbol, orderId string, clientId uint32) (resp *types.Order) {
+	params := map[string]any{}
+	params["orderId"] = orderId
+	params["symbol"] = symbol
+	if clientId > 0 {
+		params["clientId"] = clientId
+	}
+	url := API_BASE + "api/v1/order"
+	c.wrapAgent(newAgent().
+		Get(url), params).
+		EndStruct(&resp)
+	return
+
+}
 
 func (c *Client) OrdersQuery(symbol string) (resp []*types.Order) {
 	params := map[string]any{}
