@@ -9,11 +9,14 @@ import (
 func TestBpx(t *testing.T) {
 
 	c := bpx.NewClient("", "")
-	c.Debug = true
+
+	//c.Debug = true
 
 	//for _, val := range c.Withdrawals(10, 0) {
 	//	t.Log(xstring.Json(val))
 	//}
+
+	c.WithdrawalExecute("", "USDC", "Solana", "600")
 
 	//for _, val := range c.OrdersQuery("SOL_USDC") {
 	//	t.Log(xstring.Json(val))
@@ -25,7 +28,7 @@ func TestBpx(t *testing.T) {
 
 	//t.Log(xstring.Json(c.OrdersQuery("")))
 
-	//t.Log(xstring.Json(c.OrderCancel("SOL_USDC", "111947373325647872", 0)))
+	//t.Log(xstring.Json(c.OrderCancel("SOL_USDC", "111949999842721792", 0)))
 
 	//t.Log()
 

@@ -52,19 +52,20 @@ func (c *Client) Withdrawals(limit, offset int64) (resp []*types.WithDrawl) {
 	return
 }
 
-//
-//func (c *Client) WithdrawalExecute(address, symbol, blockchain, quantity string) {
-//	params := map[string]any{}
-//	params["address"] = address
-//	params["blockchain"] = blockchain
-//	params["quantity"] = quantity
-//	params["symbol"] = symbol
-//
-//	url := API_BASE + "wapi/v1/capital/withdrawals"
-//	_, resp, errs := c.wrapAgent(newAgent().
-//		Post(url), params).
-//		End()
-//	fmt.Println(errs)
-//	fmt.Println(resp)
-//	return
-//}
+/**
+* set withdrawal address:
+* https://backpack.exchange/settings/withdrawal-addresses?twoFactorWithdrawalAddress=true
+ */
+func (c *Client) WithdrawalExecute(address, symbol, blockchain, quantity string) (resp string) {
+	params := map[string]any{}
+	params["address"] = address
+	params["blockchain"] = blockchain
+	params["quantity"] = quantity
+	params["symbol"] = symbol
+
+	url := API_BASE + "wapi/v1/capital/withdrawals"
+	_, resp, _ = c.wrapAgent(newAgent().
+		Post(url), params).
+		End()
+	return
+}
