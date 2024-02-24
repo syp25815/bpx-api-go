@@ -3,10 +3,10 @@ package bpx_api_go
 import (
 	"flag"
 	"github.com/gorilla/websocket"
+	"github.com/syp25815/bpx-api-go/bpx"
 	"github.com/syp25815/bpx-api-go/bpx/types"
 	"github.com/syp25815/bpx-api-go/xstring"
 	"log"
-	"net/url"
 	"os"
 	"os/signal"
 	"strings"
@@ -24,14 +24,7 @@ func TestSocketMsg(t *testing.T) {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{
-		Scheme: "wss",
-		Host:   "ws.backpack.exchange",
-	}
-
-	t.Log(u.String())
-
-	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	c, _, err := websocket.DefaultDialer.Dial(bpx.WSS_BASE, nil)
 
 	t.Log(err)
 

@@ -17,6 +17,7 @@ const (
 )
 
 const (
+	VERSION  = "1.0.2"
 	TIME_OUT = time.Second * 5
 )
 

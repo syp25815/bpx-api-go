@@ -11,11 +11,9 @@ func TestBpx(t *testing.T) {
 	c := bpx.NewClient("", "")
 
 	c.Debug = true
-	//for _, val := range c.HistoryOrders("SOL_USDC", 100, 0) {
-	//	t.Log(xstring.Json(val))
-	//}
-
-	c.HistoryOrders("SOL_USDC", 100, 0)
+	for _, val := range c.HistoryOrders("SOL_USDC", 100, 0) {
+		t.Log(xstring.Json(val))
+	}
 
 	//for _, val := range c.HistoryFills("SOL_USDC", 10, 0) {
 	//
