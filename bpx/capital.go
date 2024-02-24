@@ -16,12 +16,10 @@ func (c *Client) Capital() (resp map[string]types.CapitalDetail) {
 	return
 }
 
-func (c *Client) Deposits(limit, offset int64) (resp []types.Deposits) {
-
+func (c *Client) Deposits(limit, offset int64) (resp []*types.Deposits) {
 	params := map[string]any{}
 	params["limit"] = limit
 	params["offset"] = offset
-
 	url := API_BASE + "wapi/v1/capital/deposits"
 	c.wrapAgent(newAgent().
 		Get(url), params).
@@ -29,8 +27,7 @@ func (c *Client) Deposits(limit, offset int64) (resp []types.Deposits) {
 	return
 }
 
-func (c *Client) DepositAddress(blockChain string) (resp types.WalletAddress) {
-
+func (c *Client) DepositAddress(blockChain string) (resp *types.WalletAddress) {
 	params := map[string]any{}
 	params["blockchain"] = blockChain
 	url := API_BASE + "wapi/v1/capital/deposit/address"

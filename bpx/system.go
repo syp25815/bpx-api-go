@@ -6,12 +6,12 @@ type SystemStatus struct {
 }
 
 // 获取系统状态
-func Status() SystemStatus {
-	var resp SystemStatus
+func Status() (resp SystemStatus) {
+	//var resp SystemStatus
 	newAgent().
 		Get(API_BASE + "api/v1/status").
 		EndStruct(&resp)
-	return resp
+	return
 }
 
 // Responds：pong

@@ -21,7 +21,7 @@ func Markets() (resp []*types.MarketItem) {
 }
 
 // 24H交易汇总
-func Ticker(symbol string) (resp types.Ticker) {
+func Ticker(symbol string) (resp *types.Ticker) {
 	url := API_BASE + "api/v1/ticker?symbol=" + symbol
 	newAgent().
 		Get(url).
@@ -37,7 +37,7 @@ func Tickers() (resp []*types.Ticker) {
 	return
 }
 
-func Depth(symbol string) (resp types.Depth) {
+func Depth(symbol string) (resp *types.Depth) {
 	url := API_BASE + "api/v1/depth?symbol=" + symbol
 	newAgent().
 		Get(url).

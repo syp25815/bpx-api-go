@@ -71,6 +71,10 @@ func (c *Client) wrapAgent(request *gorequest.SuperAgent, params map[string]any)
 		if method == gorequest.GET {
 			instruction = "fillHistoryQueryAll"
 		}
+	} else if strings.HasSuffix(url, "/wapi/v1/history/orders") {
+		if method == gorequest.GET {
+			instruction = "orderHistoryQueryAll"
+		}
 	} else if strings.HasSuffix(url, "/wapi/v1/capital/deposit/address") {
 		if method == gorequest.GET {
 			instruction = "depositAddressQuery"
@@ -98,11 +102,12 @@ func (c *Client) wrapAgent(request *gorequest.SuperAgent, params map[string]any)
 	}
 
 	return request.
-		AppendHeader("Content-Type", "application/json; charset=utf-8").
-		AppendHeader("X-Window", c.Window).
-		AppendHeader("X-API-Key", c.Key).
-		AppendHeader("X-Timestamp", ms).
-		AppendHeader("X-Signature", c.sign(instruction, ms, params)).
+		Set("Content-Type", "application/json; charset=utf-8").
+		Set("X-Window", c.Window).
+		Set("X-API-Key", c.Key).
+		Set("X-Timestamp", ms).
+		Set("X-Signature", c.sign(instruction, ms, params)).
+		SetDebug(c.Debug).
 		Proxy(c.Proxy)
 }
 
@@ -128,14 +133,7 @@ func (c *Client) sign(instruction, ms string, params map[string]any) string {
 	apiSecret, _ := base64.StdEncoding.DecodeString(strings.TrimSpace(c.Secret))
 
 	pki := ed25519.NewKeyFromSeed(apiSecret)
-
-	signature := base64.StdEncoding.EncodeToString(ed25519.Sign(pki, []byte(signStrBuilder.String())))
-
-	if c.Debug {
-		fmt.Println("Waiting Sign Str:", signStrBuilder.String())
-		fmt.Println("Signature:", signature)
-	}
-	return signature
+	return base64.StdEncoding.EncodeToString(ed25519.Sign(pki, []byte(signStrBuilder.String())))
 }
 
 func buildQueryParams(val map[string]any) string {
