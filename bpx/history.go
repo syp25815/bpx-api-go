@@ -5,8 +5,12 @@ import (
 	"github.com/syp25815/bpx-api-go/bpx/types"
 )
 
-func (c *Client) HistoryOrders(symbol string, limit, offset int64) (resp []*types.Order) {
+func (c *Client) HistoryOrders(symbol, orderId string, limit, offset int64) (resp []*types.Order) {
 	params := map[string]any{}
+
+	if len(orderId) > 0 {
+		params["orderId"] = orderId
+	}
 	params["symbol"] = symbol
 	params["limit"] = limit
 	params["offset"] = offset
@@ -17,13 +21,23 @@ func (c *Client) HistoryOrders(symbol string, limit, offset int64) (resp []*type
 	return
 }
 
-func (c *Client) HistoryFills(symbol string, limit, offset int64) (resp []*types.OrderFill) {
+func (c *Client) HistoryFills(symbol, orderId string, from, to, limit, offset int64) (resp []*types.OrderFill) {
 
 	params := map[string]any{}
 
 	if len(symbol) > 0 {
 		params["symbol"] = symbol
 	}
+
+	if len(orderId) > 0 {
+		params["orderId"] = orderId
+	}
+
+	if to > from && to > 0 {
+		params["from"] = from
+		params["to"] = to
+	}
+
 	params["limit"] = limit
 	params["offset"] = offset
 
@@ -31,7 +45,6 @@ func (c *Client) HistoryFills(symbol string, limit, offset int64) (resp []*types
 	c.wrapAgent(newAgent().
 		Get(url), params).
 		EndStruct(&resp)
-
 	for _, val := range resp {
 		val.QuoteQuantity = cast.ToFloat64(val.Price) * cast.ToFloat64(val.Quantity)
 		if val.FeeSymbol == "USDC" {

@@ -8,25 +8,31 @@ import (
 
 func TestBpx(t *testing.T) {
 
-	c := bpx.NewClient("", "")
+	var c *bpx.Client
 
-	c.Debug = true
-	for _, val := range c.HistoryOrders("SOL_USDC", 100, 0) {
+	c = bpx.NewClient("", "")
+
+	//c.Debug = true
+
+	//c.NetInfo()
+	//c.Window = "60000"
+
+	for _, val := range c.HistoryOrders("SOL_USDC", "112083497076719617", 100, 0) {
 		t.Log(xstring.Json(val))
 	}
 
-	//for _, val := range c.HistoryFills("SOL_USDC", 10, 0) {
-	//
-	//	t.Log(xstring.Json(val))
-	//}
+	//t.Log(xstring.PrettyJson(c.HistoryOrders()))
 
-	//c.Debug = true
+	for _, val := range c.HistoryFills("", "", 0, 0, 10, 0) {
+
+		t.Log(xstring.Json(val))
+	}
 
 	//for _, val := range c.Withdrawals(10, 0) {
 	//	t.Log(xstring.Json(val))
 	//}
 
-	//c.WithdrawalExecute("", "USDC", "Solana", "600")
+	//t.Log(xstring.PrettyJson(c.WithdrawalExecute("", "USDC", "Solana", "100")))
 
 	//for _, val := range c.OrdersQuery("SOL_USDC") {
 	//	t.Log(xstring.Json(val))
@@ -39,8 +45,6 @@ func TestBpx(t *testing.T) {
 	//t.Log(xstring.Json(c.OrdersQuery("")))
 
 	//t.Log(xstring.Json(c.OrderCancel("SOL_USDC", "111949999842721792", 0)))
-
-	//t.Log()
 
 	//c.OrdersCancels("SOL_USDC")
 	//t.Log(xstring.Json(c.DepositAddress("Solana")))
@@ -86,7 +90,7 @@ func TestBpx_pub(t *testing.T) {
 	//}
 
 	//t.Log(xstring.PrettyJson(bpx.Depth("SOL_USDC")))
-	t.Log(xstring.PrettyJson(bpx.Ticker("SOL_USDC")))
+	//t.Log(xstring.PrettyJson(bpx.Ticker("SOL_USDC")))
 
 	//t.Log(xstring.Json(bpx.Status()))
 	//t.Log(bpx.Ping())

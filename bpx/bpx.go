@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/cast"
+	"github.com/syp25815/bpx-api-go/bpx/types"
 	"sort"
 	"strings"
 	"time"
@@ -17,8 +18,8 @@ const (
 )
 
 const (
-	VERSION  = "1.0.2"
-	TIME_OUT = time.Second * 5
+	VERSION  = "1.0.3"
+	TIME_OUT = time.Second * 6
 )
 
 type Client struct {
@@ -34,7 +35,7 @@ func NewClient(key, secret string) *Client {
 	return &Client{
 		Key:    key,
 		Secret: secret,
-		Window: "5000",
+		Window: "6000",
 	}
 }
 
@@ -131,6 +132,10 @@ func (c *Client) sign(instruction, ms string, params map[string]any) string {
 
 	signStrBuilder.WriteString(fmt.Sprintf("&timestamp=%s&window=%s", ms, c.Window))
 
+	if c.Debug {
+		fmt.Println("Signature Str:", signStrBuilder.String())
+	}
+
 	apiSecret, _ := base64.StdEncoding.DecodeString(strings.TrimSpace(c.Secret))
 
 	pki := ed25519.NewKeyFromSeed(apiSecret)
@@ -156,4 +161,13 @@ func buildQueryParams(val map[string]any) string {
 	}
 
 	return tempStr
+}
+
+func (c *Client) NetInfo() (resp *types.NetInfo) {
+	url := `https://ipinfo.io`
+	c.wrapAgent(newAgent().
+		Get(url),
+		nil).
+		EndStruct(&resp)
+	return
 }

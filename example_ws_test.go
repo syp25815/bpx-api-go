@@ -17,6 +17,7 @@ import (
 func TestSocketMsg(t *testing.T) {
 
 	//bpx := bpx.NewClient("", "")
+
 	flag.Parsed()
 
 	log.SetFlags(0)
@@ -55,10 +56,10 @@ func TestSocketMsg(t *testing.T) {
 	//	"method": "SUBSCRIBE",
 	//	"params": []string{"kline.1m.SOL_USDC"},
 	//})
-	c.WriteJSON(map[string]any{
-		"method": "SUBSCRIBE",
-		"params": []string{"ticker.SOL_USDC", "depth.SOL_USDC"},
-	})
+	//c.WriteJSON(map[string]any{
+	//	"method": "SUBSCRIBE",
+	//	"params": []string{"ticker.SOL_USDC", "depth.SOL_USDC"},
+	//})
 
 	go func() {
 		defer close(done)
@@ -69,6 +70,7 @@ func TestSocketMsg(t *testing.T) {
 				return
 			}
 			//log.Printf("recv: %s, type: %s", message, websocket.FormatMessageType(mt))
+			log.Printf("recv: %s, type: %d", message, mt)
 
 			var wsResp types.WsResp
 			xstring.OmitDefaultAPI.Unmarshal(message, &wsResp)
@@ -82,10 +84,13 @@ func TestSocketMsg(t *testing.T) {
 				case "trade":
 				case "depth":
 				case "bookTicker":
+				case "account":
+					switch dataSpit[1] {
 
+					}
 				}
 			}
-			log.Printf("recv: %s, type: %d", message, mt)
+			//log.Printf("recv: %s, type: %d", message, mt)
 		}
 	}()
 
@@ -98,7 +103,7 @@ func TestSocketMsg(t *testing.T) {
 			return
 		case t := <-ticker.C:
 			log.Println("来了？？", t.Unix())
-			c.WriteMessage(websocket.TextMessage, []byte("Pong"))
+			c.WriteMessage(websocket.PongMessage, []byte("Pong"))
 			//err := c.WriteMessage(websocket.TextMessage, []byte(t.String()))
 			//if err != nil {
 			//	log.Println("write:", err)

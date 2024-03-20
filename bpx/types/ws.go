@@ -20,19 +20,25 @@ type WsDepth struct {
 
 type WsTrade struct {
 	Data struct {
-		E  int64  `json:"E"`
+		Z  string `json:"Z"`
+		I  string `json:"i"`
+		Z1 string `json:"z"`
+		E  string `json:"e"`
+		E1 int64  `json:"E"`
 		T  int64  `json:"T"`
-		A  string `json:"a"`
-		B  string `json:"b"`
-		E1 string `json:"e"`
-		M  bool   `json:"m"`
+		V  string `json:"V"`
+		S  string `json:"S"`
 		P  string `json:"p"`
 		Q  string `json:"q"`
-		S  string `json:"s"`
-		T1 int    `json:"t"`
+		S1 string `json:"s"`
+		T1 string `json:"t"`
+		X  string `json:"X"`
+		F  string `json:"f"`
+		O  string `json:"o"`
 	} `json:"data"`
 	Stream string `json:"stream"`
 }
+
 type WsTicker struct {
 	Data struct {
 		E  int64  `json:"E"`

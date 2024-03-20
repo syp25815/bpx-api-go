@@ -2,6 +2,10 @@
 
 Backpack Exchange Go code
 
+
+# API Docs
+https://docs.backpack.exchange/
+
 ## Installation
 `go get github.com/syp25815/bpx-api-go`
 
